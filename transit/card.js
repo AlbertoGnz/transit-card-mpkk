@@ -94,6 +94,7 @@ class TransitCard extends LitElement {
   buildDepartureItem(departure) {
     const { line, direction, time } = departure
     const minutesLeft = Math.round((Date.parse(time.date) - Date.now()) / 1000 / 60)
+    
     return html`
       <div class="departure">
         <div class="minutes">
@@ -103,17 +104,18 @@ class TransitCard extends LitElement {
           <div class="details-summary">
             <div class="details-line">
               <ha-icon icon="${line.kind == 'tram' ? 'mdi:train' : 'mdi:bus'}"></ha-icon>
-              ${line.name}
+              ${line}
             </div>
 
             <div class="details-departure">
-              ${time.formatted}
+              ${time.date.substring(11,16)}
+              
             </div>
           </div>
 
           <div class="details-direction">
             <ha-icon icon="mdi:arrow-right"></ha-icon>
-            ${direction.target.name}
+            ${direction}
           </div>
         </div>
       </div>
@@ -127,6 +129,7 @@ class TransitCard extends LitElement {
       ${styles}
       <ha-card>
         <div class="departures">
+          <h1> Next 10 trams</h1>
           ${departures.map((departure) => this.buildDepartureItem(departure))}
         </div>
       </ha-card>
